@@ -11,7 +11,7 @@ jobs:
         add-to-path: [true, false]
     steps:
       - name: Install Cygwin
-        uses: cygwin/cygwin-install-action@v3
+        uses: cygwin/cygwin-install-action@db475590d56881c6cef7b3f96f6f3dd9532ea1f4
         with:
           add-to-path: ${{ matrix.add-to-path }}
 
