@@ -1,0 +1,22 @@
+name: Reproduce cache problems
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  repro:
+    name: Reproduce cache problem
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        add-to-path: [true, false]
+    steps:
+      - name: Install Cygwin
+        uses: cygwin/cygwin-install-action@v3
+        with:
+          add-to-path: ${{ matrix.add-to-path }}
+
+      - name: Cache some random bits
+        uses: actions/cache/save@v3
+        with:
+          key: sample-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index }}-${{ github.action }}
+          path: C:\cygwin\var\log
