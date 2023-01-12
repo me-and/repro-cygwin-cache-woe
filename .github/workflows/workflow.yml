@@ -12,7 +12,7 @@ jobs:
         add-to-path: [true, false]
     steps:
       - name: Cache some random bits
-        uses: actions/cache@941bc71a2416b1d47ddeaaf31691cacefc2c9060
+        uses: actions/cache@fb86cbf3602dbb739392ef1c5ea3cd590c6d85b4
         with:
           key: sample-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index }}-${{ github.action }}
           path: C:\cygwin\var\log
