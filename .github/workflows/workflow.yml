@@ -21,33 +21,3 @@ jobs:
         uses: cygwin/cygwin-install-action@db475590d56881c6cef7b3f96f6f3dd9532ea1f4
         with:
           add-to-path: ${{ matrix.add-to-path }}
-
-      - name: Confirm no caches in this job run yet
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const key_prefix = 'sample-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index}}-';
-            const response = await github.rest.actions.getActionsCacheList({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              key: key_prefix
-            });
-            core.info('Found ' + response.data.total_count + ' caches');
-            if (response.data.total_count != 0) {
-              core.setFailed('Expected zero cache entries, found ' + response.data.total_count);
-            }
-
-      - name: Confirm presence of the from this job run
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const key_prefix = 'sample-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index}}-';
-            const response = await github.rest.actions.getActionsCacheList({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              key: key_prefix
-            });
-            core.info('Found ' + response.data.total_count + ' caches');
-            if (response.data.total_count != 1) {
-              core.setFailed('Expected one cache entry, found ' + response.data.total_count);
-            }
