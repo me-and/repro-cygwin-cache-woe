@@ -32,7 +32,7 @@ jobs:
             }
 
       - name: Cache some random bits
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v3.0.11
         with:
           key: sample-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index }}-${{ github.action }}
           path: C:\cygwin\var\log
