@@ -21,3 +21,7 @@ Warning: Cache save failed.
 ```
 
 This repository hopefully provides a simple test case to demonstrate the issue.
+
+This branch is attempting to bisect to find where the problem was introduced;
+it seems earlier releases of the actions/cache action didn't suffer from this
+problem.
