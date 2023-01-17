@@ -10,6 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         add-to-path: [true, false]
+        hide-cygwin-tar: [true, false]
     steps:
       - name: Install Cygwin
         uses: cygwin/cygwin-install-action@db475590d56881c6cef7b3f96f6f3dd9532ea1f4
@@ -31,13 +32,17 @@ jobs:
               core.setFailed('Expected zero cache entries, found ' + response.data.total_count);
             }
 
+      - name: Hide Cygwin tar
+        if: matrix.hide-cygwin-tar
+        run: Move-Item -Path C:\cygwin\bin\tar.exe -Destination C:\cygwin\bin\_tar.exe
+
       - name: Cache some random bits
         uses: actions/cache/save@v3
         with:
           key: sample-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.job }}-${{ strategy.job-index }}-${{ github.action }}
           path: C:\cygwin\var\log
 
-      - name: Confirm presence of the from this job run
+      - name: Confirm presence of the cache from this job run
         uses: actions/github-script@v6
         with:
           script: |
