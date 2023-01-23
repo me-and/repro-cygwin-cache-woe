@@ -32,9 +32,9 @@ jobs:
               core.setFailed('Expected zero cache entries, found ' + response.data.total_count);
             }
 
-      - name: Hide Cygwin tar
+      - name: Hide Cygwin zstd
         if: matrix.hide-cygwin-tar
-        run: Move-Item -Path C:\cygwin\bin\tar.exe -Destination C:\cygwin\bin\_tar.exe
+        run: Move-Item -Path C:\cygwin\bin\zstd.exe -Destination C:\cygwin\bin\_zstd.exe
 
       - name: Cache some random bits
         uses: actions/cache/save@v3
