@@ -10,12 +10,19 @@ jobs:
       fail-fast: false
       matrix:
         add-to-path: [true, false]
-        hide-cygwin-tar: [true, false]
+        hide-cygwin-zstd: [true, false]
+        site:
+          - http://ctm.crouchingtigerhiddenfruitbat.org/pub/cygwin/circa/64bit/2022/12/03/135449  # Cygwin v3.3.6
+          - http://ctm.crouchingtigerhiddenfruitbat.org/pub/cygwin/circa/64bit/2022/12/04/094805  # Cygwin v3.4.0
+          - http://mirrors.kernel.org/sourceware/cygwin/
     steps:
       - name: Install Cygwin
         uses: cygwin/cygwin-install-action@db475590d56881c6cef7b3f96f6f3dd9532ea1f4
         with:
           add-to-path: ${{ matrix.add-to-path }}
+          site: ${{ matrix.site }}
+          check-sig: ${{ !startsWith(matrix.site, 'http://ctm.crouchingtigerhiddenfruitbat.org/') }}
+
 
       - name: Confirm no caches in this job run yet
         uses: actions/github-script@v6
@@ -33,7 +40,7 @@ jobs:
             }
 
       - name: Hide Cygwin zstd
-        if: matrix.hide-cygwin-tar
+        if: matrix.hide-cygwin-zstd
         run: Move-Item -Path C:\cygwin\bin\zstd.exe -Destination C:\cygwin\bin\_zstd.exe
 
       - name: Cache some random bits
